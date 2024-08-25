@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 app.secret_key = 'secretkey'  # Change this to something secure
 
-BACKEND_URL = "http://192.168.2.253:8000"  # URL for the backend API
+BACKEND_URL = "http://0.0.0.0:8000"  # URL for the backend API
 
 @app.route('/')
 def index():
@@ -110,13 +110,12 @@ def setup_device(device_id):
     headers = {'Authorization': f"Bearer {session['token']}"}
     
     if request.method == 'POST':
-        # Capture only the necessary setup data from the form
+        # This is where data from the device is retrieved and sent to back end
         setup_data = {
-            "data": {
-                "user_info": {
-                    "mode": request.form.get('mode'),
-                    # Add other fields depending on the selected mode
-                }
+            "device_data": {
+                "temperature": 23.5,
+                "humidity": 60,
+                "state": "active"
             }
         }
 
