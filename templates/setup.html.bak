@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Setup</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container">
+    <h1>Setup Your Device</h1>
+    <p>Make sure your device is in setup mode (hold the button for 5 seconds).</p>
+    
+    <button id="scanButton" class="btn btn-primary">Scan for Devices</button>
+
+    <div id="deviceList" style="margin-top: 20px;"></div>
+
+    <form id="setupForm" style="display:none; margin-top: 20px;">
+        <h2>Configure Device</h2>
+        <div class="mb-3">
+            <label for="mode" class="form-label">Select Mode</label>
+            <select class="form-control" id="mode">
+                <option value="wifi">WiFi</option>
+                <option value="mqtt">MQTT</option>
+                <option value="matter">Matter</option>
+                <option value="zigbee">Zigbee</option>
+            </select>
+        </div>
+        <div id="wifiSettings" style="display:none;">
+            <div class="mb-3">
+                <label for="ssid" class="form-label">WiFi SSID</label>
+                <input type="text" class="form-control" id="ssid" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">WiFi Password</label>
+                <input type="password" class="form-control" id="password" required>
+            </div>
+        </div>
+        <div id="mqttSettings" style="display:none;">
+            <div class="mb-3">
+                <label for="mqttBroker" class="form-label">MQTT Broker</label>
+                <input type="text" class="form-control" id="mqttBroker" required>
+            </div>
+            <div class="mb-3">
+                <label for="mqttPort" class="form-label">MQTT Port</label>
+                <input type="number" class="form-control" id="mqttPort" required>
+            </div>
+        </div>
+        <!-- Matter and Zigbee settings can be added here similarly -->
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+
+    <div id="status" style="margin-top: 20px;"></div>
+
+    <script>
+        function sendConfiguration(configData) {
+            const deviceId = 1; // Assuming you know the device ID or fetch it somehow
+            fetch(`/api/setup?device_id=${deviceId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${your_token_here}`  // Include JWT token if needed
+                },
+                body: JSON.stringify(configData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                document.getElementById('status').innerHTML = 'Configuration sent successfully!';
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById('status').innerHTML = 'Error sending configuration.';
+            });
+        }
+    </script>
+    
+</body>
+</html>
