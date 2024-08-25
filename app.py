@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 app.secret_key = 'secretkey'  # Change this to something secure
 
-BACKEND_URL = "http://127.0.0.1:8000"  # URL for the backend API
+BACKEND_URL = "http://192.168.2.253:8000"  # URL for the backend API
 
 @app.route('/')
 def index():
